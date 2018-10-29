@@ -9,6 +9,12 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+	<developers>
+		<developer>
+			<name>Augusto</name>
+			<email>jag1968br-github@yahoo.com</email>
+		</developer>
+	</developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -145,4 +151,5 @@
         </plugins>
     </build>
 
+    
 </project>
