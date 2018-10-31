@@ -1,5 +1,6 @@
 package br.com.caelum.ingresso.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -17,7 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.com.caelum.ingresso.dao.FilmeDao;
 import br.com.caelum.ingresso.dao.SessaoDao;
+import br.com.caelum.ingresso.model.DetalhesDoFilme;
 import br.com.caelum.ingresso.model.Filme;
+import br.com.caelum.ingresso.model.Sessao;
+import br.com.caelum.ingresso.rest.OmdbClient;
 
 /**
  * Created by nando on 03/03/17.
@@ -30,6 +34,8 @@ public class FilmeController {
     private FilmeDao filmeDao;
     @Autowired
     private SessaoDao sessaoDao;
+    @Autowired
+    private OmdbClient client;
 
     @GetMapping({"/admin/filme", "/admin/filme/{id}"})
     public ModelAndView form(@PathVariable("id") Optional<Integer> id, Filme filme){
@@ -90,7 +96,17 @@ public class FilmeController {
     @GetMapping("/filme/{id}/detalhe")
     public ModelAndView detalhes(@PathVariable("id") Integer id) {
     	ModelAndView modelAndView = new ModelAndView("/filme/detalhe");
-    	modelAndView.addObject("sessoes", sessaoDao.buscaSessoesDoFilme(filmeDao.findOne(id)));
+    	
+    	Filme filme = filmeDao.findOne(id);
+    	System.out.println("Filme selecionado: " + filme.getNome());
+    	List<Sessao> sessoes = sessaoDao.buscaSessoesDoFilme(filme);
+    	System.out.println("Nº de sessões: " + sessoes.size());
+    	Optional<DetalhesDoFilme> detalhesDoFilme = client.request(filme);
+    	
+    	//System.out.println("detalhesDoFilme ano: " + detalhesDoFilme.get().getAno());
+    	
+    	modelAndView.addObject("sessoes", sessoes);
+    	modelAndView.addObject("detalhes", detalhesDoFilme.orElse(new DetalhesDoFilme()));
     	return modelAndView;
     }
     
