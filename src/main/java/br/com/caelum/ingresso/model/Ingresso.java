@@ -37,9 +37,9 @@ public class Ingresso {
 	
 	public Ingresso(Sessao sessao, TipoDeIngresso tipoDeIngresso, Lugar lugar){
 		this.sessao = sessao;
-		this.tipoDeIngresso = tipoDeIngresso;
+		this.setTipoDeIngresso(tipoDeIngresso);
 		this.setLugar(lugar);
-		this.preco = this.tipoDeIngresso.aplicaDesconto(sessao.getPreco());
+		this.preco = this.getTipoDeIngresso().aplicaDesconto(sessao.getPreco());
 	}
 	
 	public Sessao getSessao() {
@@ -64,6 +64,14 @@ public class Ingresso {
 
 	public void setLugar(Lugar lugar) {
 		this.lugar = lugar;
+	}
+
+	public TipoDeIngresso getTipoDeIngresso() {
+		return tipoDeIngresso;
+	}
+
+	public void setTipoDeIngresso(TipoDeIngresso tipoDeIngresso) {
+		this.tipoDeIngresso = tipoDeIngresso;
 	}
 
 }
