@@ -101,7 +101,7 @@ public class FilmeController {
     	System.out.println("Filme selecionado: " + filme.getNome());
     	List<Sessao> sessoes = sessaoDao.buscaSessoesDoFilme(filme);
     	System.out.println("Nº de sessões: " + sessoes.size());
-    	Optional<DetalhesDoFilme> detalhesDoFilme = client.request(filme);
+    	Optional<DetalhesDoFilme> detalhesDoFilme = client.request(filme, DetalhesDoFilme.class);
     	
     	//System.out.println("detalhesDoFilme ano: " + detalhesDoFilme.get().getAno());
     	
